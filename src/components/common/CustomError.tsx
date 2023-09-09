@@ -2,7 +2,7 @@ import {Card} from "components/common"
 import { TbFaceIdError } from "react-icons/tb";
 
 interface Props {
-	error: string;
+	error?: string;
 }
 const CustomError = ({ error }: Props) => {
 	return (

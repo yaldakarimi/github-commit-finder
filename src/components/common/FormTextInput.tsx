@@ -4,8 +4,18 @@ interface Props {
 	placeholder?: string;
 	label?: string;
 	id: string;
+	inputCustomClasses?: string;
 }
-const FormTextInput = ({ value, onChange, placeholder, id, label }: Props) => {
+const FormTextInput = ({
+	value,
+	onChange,
+	placeholder,
+	id,
+	label,
+	inputCustomClasses,
+}: Props) => {
+	const inputClasses = `${inputCustomClasses} bg-gray-50 border 
+	 text-gray-900 text-sm rounded-lg w-full p-2.5`;
 	return (
 		<div>
 			<label
@@ -20,7 +30,7 @@ const FormTextInput = ({ value, onChange, placeholder, id, label }: Props) => {
 				value={value}
 				onChange={onChange}
 				placeholder={placeholder}
-				className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+				className={inputClasses}
 			/>
 		</div>
 	);

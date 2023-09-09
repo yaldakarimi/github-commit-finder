@@ -6,4 +6,16 @@
 	.card {
 		@apply rounded-md shadow-md p-4;
 	}
+
+	.button {
+		@apply p-3 rounded-full opacity-95 cursor-pointer hover:transform hover:scale-95 transition-transform duration-300 hover:opacity-100;
+	}
+}
+
+.truncatedText {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
