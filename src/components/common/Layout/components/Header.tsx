@@ -2,9 +2,9 @@ import { FaGithub } from "react-icons/fa";
 
 const Header = () => {
 	return (
-		<div className="flex gap-4 p-6 text-slate-100 bg-darkPurple  shadow-md">
+		<div className="flex gap-4 p-6 shadow-md lightText bg-darkPurple ">
 			<FaGithub className="text-3xl" />
-			<h1 className="text-2xl font-bold">Github Viewer Application</h1>
+			<h1 className="text-2xl font-bold">Github Commits Finder</h1>
 		</div>
 	);
 };

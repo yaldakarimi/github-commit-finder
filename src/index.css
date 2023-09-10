@@ -8,9 +8,18 @@
 	}
 
 	.button {
-		@apply p-3 rounded-full opacity-95 cursor-pointer hover:transform hover:scale-95 transition-transform duration-300 hover:opacity-100;
+		@apply p-3 rounded-full opacity-95 cursor-pointer hover:transform hover:scale-95 transition-transform duration-300 hover:opacity-100 w-fit;
+	}
+
+	.lightText {
+		@apply text-slate-200;
 	}
 }
+
+.textYellow {
+	@apply text-yellow-600;
+}
+
 
 .truncatedText {
 	overflow: hidden;
