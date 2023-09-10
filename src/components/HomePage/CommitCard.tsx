@@ -12,7 +12,7 @@ const CommitCard = ({ data }: Props) => {
 	const { commit, sha } = data;
 
 	return (
-		<div className=" mb-4 p-4 rounded-md shadow-md cursor-pointer bg-darkPurple lightText  hover:transform hover:scale-95 transition-transform duration-300">
+		<div data-testid="commitItem" className=" mb-4 p-4 rounded-md shadow-md cursor-pointer bg-darkPurple lightText  hover:transform hover:scale-95 transition-transform duration-300">
 			<Link to={`/commit/${owner}/${repo}/${sha}`}>
 				<div className="mb-2">
 					<span className="text-sm textYellow">Owner: </span>

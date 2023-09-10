@@ -158,7 +158,7 @@ const HomePage = () => {
 						<button type="submit" className="button bg-yellow-600">
 							<FaSearch className="text-white" />
 						</button>
-						<div className="button bg-red-900" onClick={handleClear}>
+						<div className="button bg-red-900" onClick={handleClear} data-testid='clearBtn'>
 							<MdClear type="click" className="text-white " />
 						</div>
 					</div>
@@ -179,6 +179,7 @@ const HomePage = () => {
 							key={index}
 							onClick={() => handleSampleItemClick(sampleOwner, sampleRepo)}
 							className="bg-accent py-2 px-4 rounded-md max-w-xs text-sm cursor-pointer"
+							data-testid="sampleSearchQueries"
 						>
 							{sampleOwner} / {sampleRepo}
 						</li>
