@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SampleOwnerAndRepo } from "app/types/common";
 import { fetchCommits, clearCommits } from "app/reducers/commitsReducer";
 import { useAppDispatch, useAppSelector } from "app/hooks";
@@ -11,7 +11,7 @@ import {
 	Loader,
 	EmptyState,
 } from "components/common";
-import CommitCard from "components/CommitCard";
+import CommitCard from "components/HomePage/CommitCard";
 import { FaSearch } from "react-icons/fa";
 import { MdClear } from "react-icons/md";
 
@@ -30,12 +30,19 @@ const SAMPLE_DATA: Array<SampleOwnerAndRepo> = [
 		sampleOwner: "reduxjs",
 		sampleRepo: "redux-toolkit",
 	},
+
+	{
+		sampleOwner: "rust-lang",
+		sampleRepo: "rust",
+	},
 ];
 
 const HomePage = () => {
 	const [validationError, setValidationError] = useState<string>("");
+	const [formCleared, setFormCleared] = useState<boolean>(false);
 	const dispatch = useAppDispatch();
 	const location = useLocation();
+	const navigate = useNavigate();
 	const queryParams = new URLSearchParams(location.search);
 	const ownerParam = queryParams.get("owner");
 	const repoParam = queryParams.get("repo");
@@ -56,17 +63,24 @@ const HomePage = () => {
 	};
 
 	useEffect(() => {
-		if (ownerParam && repoParam) {
-			dispatch(setOwner(ownerParam));
-			dispatch(setRepo(repoParam));
-			dispatch(
-				fetchCommits({
-					owner: ownerParam.toLowerCase(),
-					repo: repoParam.toLowerCase(),
-				})
-			);
+		if (commits.length > 0) {
+			return;
+		} else {
+			if (ownerParam && repoParam) {
+				dispatch(setOwner(ownerParam));
+				dispatch(setRepo(repoParam));
+				setFormCleared(false);
+				dispatch(
+					fetchCommits({
+						owner: ownerParam.toLowerCase(),
+						repo: repoParam.toLowerCase(),
+					})
+				);
+			}
 		}
-	}, [ownerParam, repoParam, dispatch]);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -81,8 +95,11 @@ const HomePage = () => {
 			}
 			setValidationError(message);
 			dispatch(clearCommits());
+			setFormCleared(false);
+
 			return;
 		}
+		setFormCleared(false);
 		setValidationError("");
 		updateUrl(owner, repo);
 		dispatch(
@@ -94,6 +111,9 @@ const HomePage = () => {
 		dispatch(clearCommits());
 		dispatch(setOwner(""));
 		dispatch(setRepo(""));
+		navigate("/");
+		setFormCleared(true);
+		setValidationError("");
 	};
 
 	const handleUserChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,12 +158,8 @@ const HomePage = () => {
 						<button type="submit" className="button bg-yellow-600">
 							<FaSearch className="text-white" />
 						</button>
-						<div className="button bg-red-900">
-							<MdClear
-								type="click"
-								onClick={handleClear}
-								className="text-white "
-							/>
+						<div className="button bg-red-900" onClick={handleClear}>
+							<MdClear type="click" className="text-white " />
 						</div>
 					</div>
 				</form>
@@ -169,13 +185,13 @@ const HomePage = () => {
 					))}
 				</ul>
 			</div>
-			{status === "idle" && (
+			{(formCleared || status === "idle") && (
 				<div className="md:px-6">
 					<EmptyState />
 				</div>
 			)}
 			{status === "loading" && <Loader />}
-			{status === "failed" && (
+			{!formCleared && status === "failed" && (
 				<div className="md:px-6">
 					<Error error={error} />
 				</div>
