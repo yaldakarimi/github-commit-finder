@@ -12,10 +12,16 @@ const initialState: CommitsState = {
 	status: "idle",
 };
 
-export const fetchCommits = createAsyncThunk<Array<CommitListItem>,{ owner: string; repo: string }>(
-	"commits/fetchCommits", async ({ owner, repo }, { rejectWithValue }) => {
+export const fetchCommits = createAsyncThunk<
+	Array<CommitListItem>,
+	{ owner: string; repo: string }
+>("commits/fetchCommits", async ({ owner, repo }, { rejectWithValue }) => {
 	const res = await fetch(
-		`https://api.github.com/repos/${owner}/${repo}/commits`
+		`https://api.github.com/repos/${owner}/${repo}/commits`,
+		{
+			// TODO @Reviewers: add your own token
+			// headers: { Authorization: "" },
+		}
 	);
 	const data = await res.json();
 

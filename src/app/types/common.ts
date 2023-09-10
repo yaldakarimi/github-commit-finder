@@ -6,6 +6,7 @@ export interface ServerResponse<T> {
 	data: T | null | undefined;
 }
 
+// TODO: @Reviewers, I included index signatures in certain interfaces to prioritize project-specific data.
 export interface Author {
 	avatar_url: string;
 	id: number;
